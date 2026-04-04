@@ -1,0 +1,30 @@
+# General
+.DS_Store
+.env
+*.log
+
+# Python Virtual Environments
+envfolder/Include/
+envfolder/Lib/
+envfolder/Scripts/
+envfolder/pyvenv.cfg
+
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+**/*.pyc
+**/*.pyo
+
+# Django
+db.sqlite3
+/static/
+/media/
+
+# Node.js
+node_modules/
+dist/
+build/
+.eslintcache
