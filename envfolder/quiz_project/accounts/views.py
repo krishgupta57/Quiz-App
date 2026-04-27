@@ -10,9 +10,25 @@ from django.views.decorators.csrf import csrf_exempt
 @permission_classes([permissions.AllowAny])
 @csrf_exempt
 def signup_api(request):
-    serializer = UserSerializer(data=request.data)
+    data = request.data
+    is_admin_registration = data.get('is_admin', False)
+    secret_key = data.get('secret_key', '')
+
+    # Admin Registration Logic
+    if is_admin_registration:
+        expected_key = os.getenv('ADMIN_SECRET_KEY', 'ADMIN123')
+        if secret_key != expected_key:
+            return Response({"error": "Invalid Admin Secret Key"}, status=status.HTTP_403_FORBIDDEN)
+
+    serializer = UserSerializer(data=data)
     if serializer.is_valid():
         user = serializer.save()
+        
+        # If admin registration was successful, set staff flag
+        if is_admin_registration:
+            user.is_staff = True
+            user.save()
+            
         refresh = RefreshToken.for_user(user)
         return Response({
             'refresh': str(refresh),
