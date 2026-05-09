@@ -6,6 +6,10 @@ class Category(models.Model):
     description = models.TextField(blank=True, null=True)
     icon_name = models.CharField(max_length=50, blank=True, null=True) # e.g., 'Code', 'Database', 'Globe'
 
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -14,6 +18,10 @@ class Quiz(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     time_limit_minutes = models.IntegerField(default=10)
+
+    class Meta:
+        verbose_name_plural = "Quizzes"
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -27,6 +35,9 @@ class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions', null=True, blank=True)
     text = models.CharField(max_length=500)
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES, default='Medium')
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return self.text
@@ -47,6 +58,9 @@ class QuizAttempt(models.Model):
     percentage = models.FloatField(default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def save(self, *args, **kwargs):
         if self.total > 0:
             self.percentage = round((self.score / self.total) * 100, 2)
@@ -61,10 +75,16 @@ class UserAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     selected_choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.user.username} - Q: {self.question.id}"
+
 class UserStats(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="stats")
     max_streak = models.IntegerField(default=0)
     last_played = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "User Stats"
 
     def __str__(self):
         return f"{self.user.username} - Max Streak: {self.max_streak}"

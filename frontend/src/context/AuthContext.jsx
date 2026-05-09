@@ -4,7 +4,10 @@ import api from '../api';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [loading, setLoading] = useState(true);
 
   const logout = useCallback(() => {
@@ -26,28 +29,43 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data);
       localStorage.setItem('user', JSON.stringify(res.data));
     } catch (err) {
-      console.error("Session expired or invalid", err);
-      logout();
+      console.error("Session sync failed", err);
+      // Don't logout immediately on me/ failure if it might be temporary
+      // But if it's 401, the interceptor will handle it
     } finally {
       setLoading(false);
     }
-  }, [logout]);
+  }, []);
 
   useEffect(() => {
     loadUser();
   }, [loadUser]);
 
   const login = async (username, password) => {
-    const res = await api.post('/accounts/login/', { username, password });
-    localStorage.setItem('access_token', res.data.access);
-    localStorage.setItem('refresh_token', res.data.refresh);
-    await loadUser();
+    try {
+      const res = await api.post('/accounts/login/', { username, password });
+      localStorage.setItem('access_token', res.data.access);
+      localStorage.setItem('refresh_token', res.data.refresh);
+      await loadUser();
+      return { success: true };
+    } catch (err) {
+      return { 
+        success: false, 
+        message: err.response?.data?.detail || "Invalid credentials" 
+      };
+    }
   };
 
-  const signup = async (username, password) => {
-    await api.post('/accounts/signup/', { username, password });
-    // Standard practice: login immediately after signup
-    await login(username, password);
+  const signup = async (username, password, extra = {}) => {
+    try {
+      await api.post('/accounts/signup/', { username, password, ...extra });
+      return await login(username, password);
+    } catch (err) {
+      return { 
+        success: false, 
+        message: err.response?.data?.username?.[0] || "Registration failed" 
+      };
+    }
   };
 
   return (
@@ -56,4 +74,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-

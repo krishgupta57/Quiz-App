@@ -5,30 +5,30 @@ import { Toaster } from 'react-hot-toast';
 
 // Components
 import Layout from './components/Layout';
-import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
-import Quiz from './pages/Quiz';
-import Result from './pages/Result';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import StreakQuiz from './pages/StreakQuiz';
+import QuizSession from './pages/QuizSession';
+import Result from './pages/Result';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   if (loading) return <div className="flex flex-1 items-center justify-center">Loading...</div>;
   if (!user) return <Navigate to="/login" />;
-  if (user.is_staff) return <Navigate to="/admin" />;
   return children;
 };
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   if (loading) return <div className="flex flex-1 items-center justify-center text-white">Authenticating...</div>;
-  if (!user) return <Navigate to="/admin/login" />;
-  if (!user.is_staff) return <Navigate to="/" />;
+  if (!user || !user.is_staff) {
+    return <Navigate to="/admin/login" />;
+  }
   return children;
 };
 
@@ -57,21 +57,25 @@ function App() {
         />
         <Layout>
           <Routes>
-            {/* Student Auth */}
+            {/* Auth */}
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
-            
-            {/* Admin Auth */}
             <Route path="/admin/login" element={<PublicRoute><AdminLogin /></PublicRoute>} />
             
-            {/* Student Area */}
+            {/* Student LMS Experience */}
             <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-            <Route path="/quiz" element={<PrivateRoute><Quiz /></PrivateRoute>} />
+            <Route path="/quiz/:id" element={<PrivateRoute><QuizSession /></PrivateRoute>} />
             <Route path="/result" element={<PrivateRoute><Result /></PrivateRoute>} />
             
-            {/* Admin Area */}
+            {/* World Trivia Experience */}
+            <Route path="/streak-mode" element={<PrivateRoute><StreakQuiz /></PrivateRoute>} />
+            
+            {/* Admin Stats & CMS */}
             <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
             <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+
+            {/* Redirects */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Layout>
       </Router>
