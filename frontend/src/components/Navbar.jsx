@@ -26,16 +26,16 @@ const Navbar = () => {
               {user.is_staff && (
                 <Link to="/admin" className="text-amber-400 bg-amber-400/10 hover:bg-amber-400/20 hover:text-amber-300 py-1.5 px-3.5 rounded-full flex items-center gap-2 font-medium text-[0.95rem] transition-colors">
                   <ShieldAlert size={18} />
-                  <span>Admin Panel</span>
+                  <span className="hidden sm:inline">Admin</span>
                 </Link>
               )}
               <div className="flex items-center gap-2 bg-white/5 py-1.5 px-4 rounded-full font-semibold text-[0.9rem] border border-white/10 text-white">
                 <User size={18} />
-                <span>{user.username}</span>
+                <span className="hidden sm:inline">{user.username}</span>
               </div>
               <button onClick={handleLogout} className="bg-transparent border-none text-slate-400 hover:text-red-500 flex items-center gap-2 cursor-pointer font-medium text-[0.95rem] transition-colors">
                 <LogOut size={18} />
-                <span>Logout</span>
+                <span className="hidden sm:inline">Logout</span>
               </button>
             </>
           ) : (
