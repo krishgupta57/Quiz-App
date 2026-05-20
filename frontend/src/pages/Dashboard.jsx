@@ -57,28 +57,28 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex-1 p-4 md:p-8 bg-[#020617] text-white overflow-y-auto w-full">
+    <div className="flex-1 p-3 sm:p-5 md:p-8 bg-[#020617] text-white overflow-y-auto w-full">
       <div className="max-w-[1200px] mx-auto">
-        <header className="mb-12 text-center md:text-left pt-6">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4">Welcome back, <span className="text-indigo-400">{user?.username}</span></h1>
-          <p className="text-lg text-slate-400">Select a learning path to test your knowledge or continue your world trivia streak.</p>
+        <header className="mb-8 md:mb-12 text-center md:text-left pt-4 md:pt-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-3 md:mb-4">Welcome back, <span className="text-indigo-400">{user?.username}</span></h1>
+          <p className="text-base sm:text-lg text-slate-400 px-4 md:px-0">Select a learning path to test your knowledge or continue your world trivia streak.</p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           <div className="lg:col-span-2 space-y-8">
             {/* World Trivia Banner */}
-            <div className="bg-gradient-to-br from-orange-900/40 to-red-900/40 border border-orange-500/20 rounded-[30px] p-8 relative overflow-hidden group cursor-pointer transition-all hover:border-orange-500/40" onClick={() => navigate('/streak-mode')}>
-              <div className="absolute right-0 top-0 w-64 h-64 bg-orange-500/10 rounded-full blur-[80px] -mr-10 -mt-10 group-hover:bg-orange-500/20 transition-all duration-500"/>
-              <div className="flex flex-col sm:flex-row items-center gap-6 relative z-10">
-                <div className="bg-orange-500/20 p-5 rounded-2xl">
-                  <Flame size={40} className="text-orange-500 group-hover:scale-110 transition-transform" />
+            <div className="bg-gradient-to-br from-orange-900/40 to-red-900/40 border border-orange-500/20 rounded-[24px] sm:rounded-[30px] p-6 sm:p-8 relative overflow-hidden group cursor-pointer transition-all hover:border-orange-500/40" onClick={() => navigate('/streak-mode')}>
+              <div className="absolute right-0 top-0 w-48 sm:w-64 h-48 sm:h-64 bg-orange-500/10 rounded-full blur-[60px] sm:blur-[80px] -mr-10 -mt-10 group-hover:bg-orange-500/20 transition-all duration-500"/>
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10">
+                <div className="bg-orange-500/20 p-4 sm:p-5 rounded-2xl">
+                  <Flame size={32} className="text-orange-500 group-hover:scale-110 transition-transform sm:w-10 sm:h-10" />
                 </div>
                 <div className="text-center sm:text-left flex-1">
-                  <h2 className="text-2xl font-bold text-white mb-2">World Trivia Streak</h2>
-                  <p className="text-orange-200/70 mb-4 sm:mb-0">Infinite random questions. Sudden death mode.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">World Trivia Streak</h2>
+                  <p className="text-orange-200/70 text-sm sm:text-base mb-4 sm:mb-0">Infinite random questions. Sudden death mode.</p>
                 </div>
-                <button className="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-bold rounded-xl whitespace-nowrap shadow-[0_0_20px_rgba(249,115,22,0.4)]">Play Now</button>
+                <button className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-bold rounded-xl whitespace-nowrap shadow-[0_0_20px_rgba(249,115,22,0.4)]">Play Now</button>
               </div>
             </div>
 
@@ -95,10 +95,10 @@ const Dashboard = () => {
                     <div key={cat.id} className="flex flex-col">
                       <button 
                         onClick={() => handleCategoryClick(cat.id)}
-                        className={`w-full text-left p-6 rounded-2xl border transition-all ${selectedCategory === cat.id ? 'bg-indigo-600/10 border-indigo-500/50 shadow-[0_0_20px_rgba(99,102,241,0.15)]' : 'bg-[#0f172a]/60 border-white/5 hover:border-white/10 hover:bg-white/[0.03]'}`}
+                        className={`w-full text-left p-5 sm:p-6 rounded-2xl border transition-all ${selectedCategory === cat.id ? 'bg-indigo-600/10 border-indigo-500/50 shadow-[0_0_20px_rgba(99,102,241,0.15)]' : 'bg-[#0f172a]/60 border-white/5 hover:border-white/10 hover:bg-white/[0.03]'}`}
                       >
-                        <h4 className="text-xl font-bold mb-2 text-white">{cat.name}</h4>
-                        <p className="text-slate-400 text-sm line-clamp-2">{cat.description || 'Explore quizzes in this category'}</p>
+                        <h4 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2 text-white">{cat.name}</h4>
+                        <p className="text-slate-400 text-xs sm:text-sm line-clamp-2">{cat.description || 'Explore quizzes in this category'}</p>
                       </button>
                       
                       {/* Quizzes Dropdown */}

@@ -140,8 +140,8 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto px-4 py-8 animate-fade-in flex-1">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 bg-[#0f172a]/40 p-6 rounded-3xl border border-white/5 backdrop-blur-sm">
+    <div className="w-full max-w-[1200px] mx-auto px-4 py-6 md:py-8 animate-fade-in flex-1">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-10 gap-6 bg-[#0f172a]/40 p-5 md:p-6 rounded-3xl border border-white/5 backdrop-blur-sm text-center md:text-left">
         <div>
           <h1 className="text-3xl font-bold text-white tracking-tight">System Audit Dashboard</h1>
           <p className="text-slate-400 mt-1">Manage platform content and monitor student performance</p>
@@ -151,11 +151,11 @@ const AdminDashboard = () => {
         </button>
       </div>
 
-      <div className="flex justify-center mb-12">
-        <div className="flex flex-wrap justify-center bg-black/30 p-1.5 rounded-2xl border border-white/10 gap-1 shadow-inner">
+      <div className="flex justify-center mb-8 md:mb-12">
+        <div className="flex flex-wrap justify-center bg-black/30 p-1.5 rounded-2xl border border-white/10 gap-2 sm:gap-1 shadow-inner max-w-full">
           {tabs.map(tab => (
-            <button key={tab.id} className={`flex items-center gap-2 px-4 py-2.5 font-semibold rounded-xl text-[0.85rem] transition-all duration-300 ${activeTab === tab.id ? 'bg-indigo-600 text-white shadow-[0_4px_15px_rgba(99,102,241,0.4)] scale-105' : 'bg-transparent text-slate-400 hover:text-white'}`} onClick={() => setActiveTab(tab.id)}>
-              <tab.icon size={16} /> {tab.label}
+            <button key={tab.id} className={`flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 font-semibold rounded-xl text-[0.8rem] sm:text-[0.85rem] transition-all duration-300 ${activeTab === tab.id ? 'bg-indigo-600 text-white shadow-[0_4px_15px_rgba(99,102,241,0.4)] scale-105' : 'bg-transparent text-slate-400 hover:text-white'}`} onClick={() => setActiveTab(tab.id)}>
+              <tab.icon size={16} className="shrink-0" /> <span className="hidden sm:inline md:inline lg:inline xl:inline">{tab.label}</span>
             </button>
           ))}
         </div>
@@ -163,7 +163,7 @@ const AdminDashboard = () => {
 
       <div className="max-w-[900px] mx-auto">
         <AnimatePresence mode="wait">
-          <motion.div key={activeTab} variants={tabVariants} initial="initial" animate="animate" exit="exit" className="bg-[#0f172a]/60 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+          <motion.div key={activeTab} variants={tabVariants} initial="initial" animate="animate" exit="exit" className="bg-[#0f172a]/60 backdrop-blur-2xl border border-white/10 rounded-2xl md:rounded-3xl p-5 sm:p-6 md:p-8 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl -mr-16 -mt-16 pointer-events-none" />
             
             {activeTab === 'categories' && (
@@ -255,26 +255,26 @@ const AdminDashboard = () => {
               <div className="relative">
                 <h2 className="text-2xl font-bold text-white mb-6">Student Audit Log</h2>
                 <div className="overflow-x-auto w-full">
-                  <table className="w-full border-collapse text-left">
+                  <table className="w-full border-collapse text-left whitespace-nowrap">
                     <thead>
                       <tr className="border-b border-white/10">
-                        <th className="pb-4 text-slate-400 font-semibold tracking-wider text-xs uppercase">Student</th>
-                        <th className="pb-4 text-slate-400 font-semibold tracking-wider text-xs uppercase">Quiz</th>
-                        <th className="pb-4 text-slate-400 font-semibold tracking-wider text-xs uppercase text-center">Score</th>
-                        <th className="pb-4 text-slate-400 font-semibold tracking-wider text-xs uppercase text-right">Date</th>
+                        <th className="pb-4 pr-4 text-slate-400 font-semibold tracking-wider text-xs uppercase">Student</th>
+                        <th className="pb-4 px-4 text-slate-400 font-semibold tracking-wider text-xs uppercase">Quiz</th>
+                        <th className="pb-4 px-4 text-slate-400 font-semibold tracking-wider text-xs uppercase text-center">Score</th>
+                        <th className="pb-4 pl-4 text-slate-400 font-semibold tracking-wider text-xs uppercase text-right">Date</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
                       {attempts.map(att => (
                         <tr key={att.id} className="hover:bg-white/[0.02] transition-colors group">
-                          <td className="py-4 text-white font-medium group-hover:text-indigo-300">{att.username}</td>
-                          <td className="py-4 text-slate-300 text-sm">{att.quiz_title}</td>
-                          <td className="py-4 text-center">
+                          <td className="py-4 pr-4 text-white font-medium group-hover:text-indigo-300">{att.username}</td>
+                          <td className="py-4 px-4 text-slate-300 text-sm">{att.quiz_title}</td>
+                          <td className="py-4 px-4 text-center">
                             <span className={`inline-block px-3 py-1 rounded-md text-xs font-bold ${att.percentage >= 80 ? 'bg-emerald-500/10 text-emerald-400' : att.percentage >= 50 ? 'bg-amber-500/10 text-amber-400' : 'bg-red-500/10 text-red-400'}`}>
                               {att.score}/{att.total} ({att.percentage}%)
                             </span>
                           </td>
-                          <td className="py-4 text-slate-500 text-xs text-right font-mono">{att.created_at}</td>
+                          <td className="py-4 pl-4 text-slate-500 text-xs text-right font-mono">{att.created_at}</td>
                         </tr>
                       ))}
                       {attempts.length === 0 && !loading && <tr><td colSpan="4" className="text-center py-8 text-slate-500">No attempts yet.</td></tr>}
@@ -314,21 +314,21 @@ const AdminDashboard = () => {
               <div className="relative">
                 <h2 className="text-2xl font-bold text-white mb-6">System Users</h2>
                 <div className="overflow-x-auto w-full">
-                  <table className="w-full border-collapse text-left">
+                  <table className="w-full border-collapse text-left whitespace-nowrap">
                     <thead>
                       <tr className="border-b border-white/10">
-                        <th className="pb-4 text-slate-400 font-semibold tracking-wider text-xs uppercase">Username</th>
-                        <th className="pb-4 text-slate-400 font-semibold tracking-wider text-xs uppercase text-right">Action</th>
+                        <th className="pb-4 pr-4 text-slate-400 font-semibold tracking-wider text-xs uppercase">Username</th>
+                        <th className="pb-4 pl-4 text-slate-400 font-semibold tracking-wider text-xs uppercase text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
                       {users.map(u => (
                         <tr key={u.id} className="hover:bg-white/[0.02] transition-colors">
-                          <td className="py-4 text-white font-medium flex items-center gap-2">
+                          <td className="py-4 pr-4 text-white font-medium flex items-center gap-2">
                             {u.username}
                             {u.is_staff && <span className="bg-indigo-500/10 text-indigo-400 text-[0.6rem] px-2 py-0.5 rounded uppercase font-bold">Admin</span>}
                           </td>
-                          <td className="py-4 text-right">
+                          <td className="py-4 pl-4 text-right">
                             <button onClick={() => deleteUser(u.id)} disabled={u.is_staff} className="text-slate-500 hover:text-red-400 p-2 disabled:opacity-20"><Trash2 size={16}/></button>
                           </td>
                         </tr>

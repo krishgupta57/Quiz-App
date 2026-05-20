@@ -127,19 +127,19 @@ const QuizSession = () => {
       </div>
 
       {/* Question Container */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-8 flex items-center justify-center">
-        <div className="max-w-[800px] w-full bg-[#0f172a]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative">
+      <div className="flex-1 overflow-y-auto p-2 sm:p-4 md:p-8 flex items-center justify-center">
+        <div className="max-w-[800px] w-full bg-[#0f172a]/60 backdrop-blur-xl border border-white/10 rounded-3xl p-4 sm:p-6 md:p-10 shadow-2xl relative">
           
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-5 sm:mb-6">
             <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">Question {currentIndex + 1} of {questions.length}</span>
             <span className={`text-[0.65rem] font-bold uppercase tracking-widest px-3 py-1 rounded-md border ${currentQ.difficulty === 'Easy' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : currentQ.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>
               {currentQ.difficulty}
             </span>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-bold mb-10 leading-tight">{currentQ.text}</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-10 leading-tight">{currentQ.text}</h2>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {currentQ.choices.map(choice => {
               const selectedAnswerId = answers[currentQ.id];
               const hasAnswered = !!selectedAnswerId;
@@ -168,9 +168,9 @@ const QuizSession = () => {
                   key={choice.id}
                   onClick={() => handleSelect(choice.id)}
                   disabled={hasAnswered}
-                  className={`w-full text-left p-5 rounded-2xl border-2 transition-all duration-200 flex items-center justify-between group ${btnClass}`}
+                  className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 flex items-center justify-between group ${btnClass}`}
                 >
-                  <span className={`text-lg ${textClass}`}>{choice.text}</span>
+                  <span className={`text-base sm:text-lg pr-4 ${textClass}`}>{choice.text}</span>
                   <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${circleClass}`}>
                     {hasAnswered && choice.is_correct && <CheckCircle2 size={16} className="text-white" />}
                     {hasAnswered && isSelected && !choice.is_correct && <div className="w-2 h-2 rounded-full bg-white" />}
@@ -196,7 +196,7 @@ const QuizSession = () => {
           <button 
             onClick={() => setCurrentIndex(prev => prev + 1)}
             disabled={!answers[currentQ.id]}
-            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 sm:px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold flex items-center gap-2 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span className="hidden sm:block">Next Question</span> <ChevronRight size={20} />
           </button>
@@ -204,9 +204,10 @@ const QuizSession = () => {
           <button 
             onClick={handleSubmit}
             disabled={isSubmitting || !answers[currentQ.id]}
-            className="px-10 py-3 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white rounded-xl font-black text-lg flex items-center gap-2 shadow-xl shadow-emerald-500/20 transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 sm:px-10 py-3 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white rounded-xl font-black text-base sm:text-lg flex items-center gap-2 shadow-xl shadow-emerald-500/20 transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? 'Submitting...' : 'Submit Final Answers'}
+            {isSubmitting ? 'Submitting...' : <span className="hidden sm:inline">Submit Final Answers</span>}
+            {!isSubmitting && <span className="sm:hidden">Submit</span>}
           </button>
         )}
       </div>
