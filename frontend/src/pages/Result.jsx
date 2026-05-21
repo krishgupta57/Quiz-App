@@ -14,7 +14,7 @@ const Result = () => {
         <h2 className="text-2xl font-bold mb-4">No Result Found</h2>
         <button onClick={() => navigate('/')} className="px-6 py-3 bg-indigo-600 rounded-xl font-bold">Go to Dashboard</button>
       </div>
-      
+
     );
   }
 
@@ -43,48 +43,69 @@ const Result = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4 w-full bg-[#020617] relative overflow-hidden">
+    <div className="flex-1 min-h-screen flex flex-col items-center justify-center p-4 w-full bg-[#020617] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r ${bgGradient} opacity-10 rounded-full blur-[150px]`} />
+        <div className="absolute top-10 left-8 w-72 h-72 bg-[#7c3aed]/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-6 w-80 h-80 bg-[#0ea5e9]/20 rounded-full blur-3xl" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className={`w-[600px] h-[600px] bg-gradient-to-r ${bgGradient} opacity-10 rounded-full blur-[150px]`} />
+        </div>
       </div>
 
-      <motion.div 
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0, y: 30 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        className="bg-[#0f172a]/70 backdrop-blur-2xl border border-white/10 rounded-3xl w-full max-w-[600px] p-10 md:p-14 text-center shadow-2xl relative z-10"
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="relative z-10 w-full max-w-[640px] p-8 md:p-12 bg-[#0b1122]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-[0_35px_120px_-55px_rgba(56,189,248,0.7)]"
       >
-        <span className="inline-block px-4 py-1.5 bg-white/5 rounded-full text-slate-300 text-sm font-bold tracking-widest uppercase mb-8 border border-white/10">
-          {quiz_title}
-        </span>
+        <div className="mb-8 text-center">
+          <p className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.4em] text-slate-400 font-semibold mb-3">
+            <Trophy size={14} className="opacity-80" /> Quiz Completed
+          </p>
+          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">Your Result is In</h2>
+          <p className="mt-3 text-sm text-slate-400 max-w-[520px] mx-auto">
+            {quiz_title} has been graded. Celebrate your progress and use the score to sharpen your next attempt.
+          </p>
+        </div>
 
-        <div className="relative w-40 h-40 mx-auto mb-10">
+        <div className="relative w-44 h-44 mx-auto mb-10">
           <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="3" />
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3" />
             <motion.path
-              initial={{ strokeDasharray: "0, 100" }}
+              initial={{ strokeDasharray: '0, 100' }}
               animate={{ strokeDasharray: `${percentage}, 100` }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
+              transition={{ duration: 1.5, ease: 'easeOut' }}
               d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none" stroke={ringColor} strokeWidth="3" strokeLinecap="round"
+              fill="none"
+              stroke={ringColor}
+              strokeWidth="3"
+              strokeLinecap="round"
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center rotate-90">
-             <Trophy size={32} color={ringColor} className="mb-1 opacity-80" />
-             <span className={`text-2xl font-black ${color}`}>{Math.round(percentage)}%</span>
+            <Trophy size={34} color={ringColor} className="mb-2 opacity-90" />
+            <span className={`text-3xl md:text-4xl font-black ${color}`}>{Math.round(percentage)}%</span>
           </div>
         </div>
 
-        <h1 className="text-5xl md:text-6xl font-black text-white mb-2 tracking-tighter">
-          {score} <span className="text-2xl text-slate-500 font-normal">/ {total}</span>
-        </h1>
-        
-        <h2 className={`text-xl font-bold mb-10 uppercase tracking-widest ${color}`}>{message}</h2>
+        <div className="mb-10">
+          <h1 className="text-5xl md:text-6xl font-black text-white mb-2 tracking-tight">
+            {score} <span className="text-2xl md:text-3xl text-slate-500 font-medium">/ {total}</span>
+          </h1>
+          <p className={`text-xl md:text-2xl font-semibold uppercase tracking-[0.18em] ${color}`}>{message}</p>
+        </div>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
-          <button onClick={() => navigate('/')} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white font-bold py-4 px-8 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+          <button
+            onClick={() => navigate('/')}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white font-semibold py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 transition-all duration-200"
+          >
             <Home size={18} /> Return to Dashboard
           </button>
-          <button onClick={() => window.location.reload()} className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white font-bold py-4 px-10 rounded-xl bg-gradient-to-r ${bgGradient} shadow-lg transition-all transform hover:-translate-y-1`}>
+          <button
+            onClick={() => window.location.reload()}
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white font-semibold py-4 px-10 rounded-2xl bg-gradient-to-r ${bgGradient} shadow-lg shadow-slate-900/40 transition-transform duration-200 hover:-translate-y-1`}
+          >
             Retake Quiz <ChevronRight size={18} />
           </button>
         </div>
