@@ -14,6 +14,7 @@ const Result = () => {
         <h2 className="text-2xl font-bold mb-4">No Result Found</h2>
         <button onClick={() => navigate('/')} className="px-6 py-3 bg-indigo-600 rounded-xl font-bold">Go to Dashboard</button>
       </div>
+      
     );
   }
 
