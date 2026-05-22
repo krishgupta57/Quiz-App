@@ -18,7 +18,7 @@ const Result = () => {
     );
   }
 
-  const { score, total, percentage, quiz_title } = attempt;
+  const { score, total, percentage, quiz_title, quiz: quizId } = attempt;
 
   let message = "";
   let color = "text-indigo-500";
@@ -103,7 +103,7 @@ const Result = () => {
             <Home size={18} /> Return to Dashboard
           </button>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => quizId ? navigate(`/quiz/${quizId}`) : navigate('/streak-mode')}
             className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white font-semibold py-4 px-10 rounded-2xl bg-gradient-to-r ${bgGradient} shadow-lg shadow-slate-900/40 transition-transform duration-200 hover:-translate-y-1`}
           >
             Retake Quiz <ChevronRight size={18} />

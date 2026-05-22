@@ -15,6 +15,8 @@ import AdminLogin from './pages/AdminLogin';
 import StreakQuiz from './pages/StreakQuiz';
 import QuizSession from './pages/QuizSession';
 import Result from './pages/Result';
+import ResultsHistory from './pages/ResultsHistory';
+
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -66,6 +68,7 @@ function App() {
             <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/quiz/:id" element={<PrivateRoute><QuizSession /></PrivateRoute>} />
             <Route path="/result" element={<PrivateRoute><Result /></PrivateRoute>} />
+            <Route path="/results" element={<PrivateRoute><ResultsHistory /></PrivateRoute>} />
             
             {/* World Trivia Experience */}
             <Route path="/streak-mode" element={<PrivateRoute><StreakQuiz /></PrivateRoute>} />

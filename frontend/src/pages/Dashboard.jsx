@@ -142,7 +142,12 @@ const Dashboard = () => {
               ) : results.length > 0 ? (
                 <div className="space-y-4">
                   {results.map(r => (
-                    <div key={r.id} className="p-4 bg-black/20 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
+                    <div 
+                      key={r.id} 
+                      onClick={() => r.quiz ? navigate(`/quiz/${r.quiz}`) : navigate('/streak-mode')}
+                      className="p-4 bg-black/20 rounded-xl border border-white/5 hover:border-indigo-500/30 hover:bg-white/[0.02] cursor-pointer transition-all active:scale-[0.98]"
+                      title="Click to retake this quiz"
+                    >
                       <div className="flex justify-between items-start mb-2">
                         <span className="font-bold text-sm text-indigo-100 line-clamp-1 pr-2">{r.quiz_title}</span>
                         <span className={`text-xs font-black px-2 py-0.5 rounded shrink-0 ${r.percentage >= 80 ? 'bg-emerald-500/20 text-emerald-400' : r.percentage >= 50 ? 'bg-amber-500/20 text-amber-400' : 'bg-red-500/20 text-red-400'}`}>{r.percentage}%</span>
